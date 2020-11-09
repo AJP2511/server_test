@@ -6,6 +6,7 @@ const Categoria = mongoose.model('categorias')
 require('../models/Postagem')
 const Postagem = mongoose.model('postagens')
 
+//CATEGORIAS
 
 router.get('/', (req,res) => {
 
@@ -104,6 +105,8 @@ router.post('/categorias/deletar', (req,res) => {
     })
 })
 
+// SENSORES
+
 router.get('/sensores', (req,res) => {
     Postagem.find().lean().populate("categoria").sort({data:"desc"}).then((data) => {
         res.render('admin/sensores', {postagens: data})
@@ -170,11 +173,11 @@ router.post('/sensores/edit', (req,res) => {
     
     Postagem.findOne({_id: req.body.id}).then((data) => {
       
-            nome_equipamento = req.body.nome_equipamento,
-            marca = req.body.marca,
-            estado = req.body.estado,
-            quantidade = req.body.quantidade,
-            categoria = req.body.categoria
+          data.nome_equipamento = req.body.nome_equipamento,
+          data.marca = req.body.marca,
+          data.estado = req.body.estado,
+          data.quantidade = req.body.quantidade,
+          data.categoria = req.body.categoria
 
             data.save().then(() => {
               req.flash("success_msg","Sensor editado com sucesso!")
@@ -199,5 +202,8 @@ router.post('/sensores/deletar', (req,res) => {
       res.redirect("/admin/sensores")
     })
 })
+
+//EMPRESTIMOS
+
 
 module.exports = router

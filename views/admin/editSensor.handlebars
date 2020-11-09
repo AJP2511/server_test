@@ -10,16 +10,15 @@
         <h4>Editar sensor</h4>
         <form action="/admin/sensores/edit" method="POST">
             <input type="hidden" value="{{data._id}}" name="id">
-            <label for="nome_sensor">Nome do sensor: </label>
-            <input type="text" name="nome_sensor" id="nome_sensor" class="form-control" value="{{data.nome_sensor}}" >
-            <label for="vibracao">Vibracao: </label>
-            <input type="text" name="vibracao" id="vibracao" class="form-control" value="{{data.vibracao}}">
+            <label for="nome_equipamento">Nome do equipamento: </label>
+            <input type="text" name="nome_equipamento" id="nome_equipamento" class="form-control" value="{{data.nome_equipamento}}" >
+            <label for="marca">Marca: </label>
+            <input type="text" name="marca" id="marca" class="form-control" value="{{data.marca}}">
+            <label for="estado">Estado: </label>
+            <input type="text" name="estado" id="estado" class="form-control" value="{{data.estado}}">
+            <label for="quantidade">Quantidade: </label>
+            <input type="text" name="quantidade" id="quantidade" class="form-control" value="{{data.quantidade}}">
             <label for="status">Status: </label>
-            <select name="status" class="custom-select" >
-                <option value={{data.status}}>{{data.status}}</option>
-                <option value="Online">Online</option>
-                <option value="Offline">Offline</option>
-            </select>
             <label for="categoria">Categoria: </label>
             <select name="categoria" class="custom-select">
                 {{#each categorias}}
