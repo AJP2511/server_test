@@ -1,0 +1,49 @@
+<h4>Lista de categorias</h4>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Slug</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  
+{{#each categoria}}
+
+  <tbody>
+    <tr>      
+      <td>{{nome}}</td>
+      <td>{{slug}}</td>
+      <th>{{date}}</th>
+    </tr>
+  </tbody>
+{{else}}
+{{/each}}
+</table>
+
+<h4>Lista de Sensores</h4>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nome do equipamento</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  
+{{#each postagem}}
+
+  <tbody>
+    <tr>      
+      <td>{{nome_equipamento}}</td>
+      <td>{{marca}}</td>
+      <td>{{estado}}</td>
+      <td>{{quantidade}}</td>
+      <th>{{date}}</th>
+    </tr>
+  </tbody>
+{{else}}
+{{/each}}
+</table>
