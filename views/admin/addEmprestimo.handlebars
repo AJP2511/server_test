@@ -1,0 +1,19 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{text}}</div>
+{{else}}
+
+{{/each}}
+
+<h3>Novo empréstimo</h3>
+<div class="card">
+    <div class="car-body"></div>
+    <form action="/admin/emprestimo/nova" method="POST">
+    <label for="codigo">codigo: </label>
+    <input type="text" name="codigo" id="codigo" placeholder="codigo da categoria" class="form-control">
+    <label for="destino">Destino: </label>
+    <input type="text" name="destino" id="destino" placeholder="destino da categoria" class="form-control">
+    <br>
+    <button type="submit" class="btn btn-success">Criar empréstimo</button>
+</form>
+</div>
+</div>

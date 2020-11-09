@@ -1,0 +1,22 @@
+<h2>Lista de Empréstimos:</h2>
+<hr>
+<a href="/admin/emprestimo/add"><button class="btn btn-success">Novo empréstimo</button></a>
+
+{{#each categorias}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>Equipamnto: {{codigo}}</h4>
+            <p>Destino: {{destino}}</p>
+            <br>
+            <small>Data: {{date}}</small>
+            <br>
+            <a href="/admin/emprestimo/edit/{{_id}}"><button class="btn btn-success mt-2">Editar empréstimo</button></a>
+            <form action="/admin/emprestimo/deletar" method="POST">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="btn btn-danger mt-2">Deletar empréstimo</button>
+            </form>
+        </div>
+    </div>
+{{else}}
+    <p>Nenhuma postagem registrada</p>
+{{/each}}

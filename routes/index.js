@@ -5,6 +5,8 @@ require('../models/Categoria')
 const Categoria = mongoose.model('categorias')
 require('../models/Postagem')
 const Postagem = mongoose.model('postagens')
+require('../models/Emprestimo')
+const Emprestimo = mongoose.model('emprestimos')
 
 //CATEGORIAS
 
@@ -23,15 +25,12 @@ router.get('/', (req,res) => {
     })    
 })
 
-router.get('/posts', (req,res) => {
-    res.send('pagina de posts')
-})
-
 router.get('/categorias', (req,res) => {
     Categoria.find().lean().sort({date:'desc'}).then((data) => {
         res.render('admin/categorias',{categorias:data})
     }).catch((err) => {
       req.flash('error_msg', "houve um erro ao listas as categorias")
+      res.redirect('/admin')
     })
    
 })
@@ -205,5 +204,81 @@ router.post('/sensores/deletar', (req,res) => {
 
 //EMPRESTIMOS
 
+router.get('/emprestimo', (req,res) => {
+    Emprestimo.find().lean().sort({date:'desc'}).then((data) => {
+        res.render('admin/emprestimo', {categorias: data})
+    }).catch((err) => {
+        req.flash("error_msg","Houve um erro ao carregar seus emprestimos")
+        res.redirect('/admin')
+    })
+})
 
+router.get('/emprestimo/add', (req,res) => {
+    res.render('admin/addEmprestimo')
+})
+
+router.post('/emprestimo/nova', (req,res) => {
+
+    var erros = []
+
+    if(req.body.codigo == null){
+      erros.push({text:"nome vazio"})
+    }
+    if(req.body.destino == null){
+      erros.push({text:"destino vazio"})
+    }
+    if(erros.length > 0){
+      res.render("admin/addEmprestimo", {erros:erros})
+    }else{
+      const novoEmprestimo = {
+        codigo: req.body.codigo,
+        destino: req.body.destino
+      }
+
+      new Emprestimo(novoEmprestimo).save().then(() => {
+        req.flash("success_msg","Destino cadastrado com sucesso!")
+        res.redirect('/admin/emprestimo')
+      }).catch((err) => {
+        req.flash("error_msg","Houve um erro ao cadastrar o empréstimo!")
+        res.redirect("/admin/emprestimo")
+      })
+    }
+})
+
+router.get('/emprestimo/edit/:id', (req,res) => {
+    Emprestimo.findOne({_id:req.params.id}).lean().then((data) => {
+        res.render('admin/editEmprestimo', {categorias:data})
+    }).catch((err) => {
+        req.flash("error_msg","Erro!")
+        res.redirect("/admin/emprestimo")
+    })
+})
+
+router.post('/emprestimo/edit', (req,res) => {
+    Emprestimo.findOne({_id: req.body.id}).then((data) => {
+      data.codigo = req.body.codigo
+      data.destino = req.body.destino
+
+      data.save().then(() => {
+        req.flash("success_msg","Empréstimo salvo com sucesso!")
+        res.redirect("/admin/emprestimo")
+      }).catch((err) => {
+          req.flash("error_msg","Houve um erro ao editar seu empréstimo!")
+          res.redirect("/admin/emprestimo")
+      })
+    }).catch((err) => {
+        req.flash("error_msg","Houve um erro ao editar seu empréstimo!")
+        res.redirect("/admin/emprestimo")
+    })
+})
+
+router.post('/emprestimo/deletar', (req,res) => {
+  Emprestimo.deleteOne({_id:req.body.id}).then(() => {
+      req.flash("success_msg","Empréstimo deletado com sucesso")
+      res.redirect('/admin/emprestimo')
+  }).catch((err) => {
+      req.flash("error_msg","Houve um erro ao deletar seu empréstimo")
+      res.redirect('/admin/esmprestimo')
+  })
+})
 module.exports = router

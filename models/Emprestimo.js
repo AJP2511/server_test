@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Emprestimo = new Schema({
-    equipamento_emprestado:{
+    codigo:{
         type: String,
         required: true
     },
-    para_quem:{
+    destino:{
         type: String,
         required: true
     },
@@ -16,4 +16,4 @@ const Emprestimo = new Schema({
     }
 })
 
-mongoose.model('emprestimos', Categoria)
+mongoose.model('emprestimos', Emprestimo)
